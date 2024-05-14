@@ -11,11 +11,17 @@ def webhook(request):
     if request.method == 'POST':
         print(request.body)
         body = json.loads(request.body)
-        retaildemang_id = body['events'][0]['meta']['href'].split('/')[-1]
-        ms = Moysklad()
-        ms.edit_retaildemand_description(retaildemang_id)
-        print(f'Edited {retaildemang_id}')
-        return JsonResponse({'status': 'ok'})
+        action_type = body['events'][0]['action']
+        if action_type == 'CREATE':
+            print('CREATE')
+            retaildemang_id = body['events'][0]['meta']['href'].split('/')[-1]
+            ms = Moysklad()
+            ms.edit_retaildemand_description(retaildemang_id)
+            print(f'Edited {retaildemang_id}')
+            return JsonResponse({'status': 'ok'})
+        elif action_type == 'UPDATE':
+            print('UPDATE')
+            return JsonResponse({'status': 'ok'})
     if request.method == 'GET':
         print(request.GET)
         return JsonResponse({'status': 'ok'})
