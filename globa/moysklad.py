@@ -96,7 +96,7 @@ class Moysklad:
                     percent_cashback = attribute['value']
             if percent_cashback > 0:
                 print(
-                    f'У товара "{product_obj['name']}" кешбек {percent_cashback}% та ціна {product['total_price']}')
+                    f'У товара {product_obj['name']} кешбек {percent_cashback}% та ціна {product['total_price']}')
                 total_cashback_sum = product['total_price'] * percent_cashback / 100
                 products_cashback.append(total_cashback_sum)
         if products_cashback:
