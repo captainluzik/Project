@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres-globa
+    image: postgres:13.4
+    env_file:
+      - .env
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - globa_network
+
+  django:
+    container_name: django-globa
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - globa_network
+    ports:
+      - "8787:8787"
+
+#  nginx:
+#    container_name: nginx
+#    restart: unless-stopped
+#    build:
+#      context: .
+#      dockerfile: ./nginx/DockerFile
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - ./nginx/prod/conf.d:/etc/nginx/conf.d/default.conf
+#      - ./etc/letsencrypt:/etc/letsencrypt:ro
+#      - ./certbot/data:/var/www/certbot
+#      - static_volume:/app/static
+#      - media_volume:/app/media
+#    networks:
+#      - globa_network
+#    depends_on:
+#      - django
+
+
+
+volumes:
+  database:
+  static_volume:
+  media_volume:
+
+networks:
+  globa_network:
+    name: globa_network
+    driver: bridge
