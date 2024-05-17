@@ -4,6 +4,7 @@ import base64
 import pprint
 import os
 from dotenv import load_dotenv
+import math
 
 load_dotenv()
 
@@ -100,7 +101,7 @@ class Moysklad:
         if products_cashback:
             pprint.pprint("Сума кешбеку")
             pprint.pprint(sum(products_cashback))
-            return round(sum(products_cashback) / 100, 2)
+            return math.floor(sum(products_cashback) / 100)
 
         return products_cashback
 
@@ -111,9 +112,15 @@ class Moysklad:
         return self.get(f'entity/service/{service_id}')
 
     def edit_retaildemand_description(self, retaildemand_id: str):
+        retaildemand = self.get_retaildemand(retaildemand_id)
+        counterparty_id = retaildemand['agent']['meta']['href'].split('/')[-1]
+        counterparty_tags = self.get_countreparty_tags(counterparty_id)
+        if "msf" not in counterparty_tags:
+            print('No tags - no cashback')
+            return
         old_description = ''
         if 'description' in self.get_retaildemand(retaildemand_id):
             old_description = self.get_retaildemand(retaildemand_id)['description']
-        new_description = f'{old_description} Cashback: {self.get_products_cashback_array(retaildemand_id)}'
+        new_description = f'{old_description} Cash {self.get_products_cashback_array(retaildemand_id)} + Coffee'
         response = self.put(f'entity/retaildemand/{retaildemand_id}', {'description': new_description})
         return response
