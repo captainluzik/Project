@@ -138,3 +138,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPEND_SLASH = False
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sdicpower-invest.com',
+    'https://www.sdicpower-invest.com',
+    'http://sdicpower-invest.com',
+    'http://www.sdicpower-invest.com',
+]
