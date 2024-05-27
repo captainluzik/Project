@@ -5,14 +5,16 @@ import pprint
 import os
 from dotenv import load_dotenv
 import math
+from main.models import Config
 
 load_dotenv()
 
 
 class Moysklad:
     def __init__(self):
-        self.login = os.getenv('MOYSKLAD_LOGIN')
-        self.password = os.getenv('MOYSKLAD_PASSWORD')
+        self.config = Config.current()
+        self.login = self.config.login
+        self.password = self.config.password
         self.base_url = 'https://api.moysklad.ru/api/remap/1.2/'
         self.token_headers = self.get_token_header()
         self.access_token = self.get_access_token()
@@ -121,6 +123,9 @@ class Moysklad:
         old_description = ''
         if 'description' in self.get_retaildemand(retaildemand_id):
             old_description = self.get_retaildemand(retaildemand_id)['description']
+        if 'Coffee' in old_description:
+            print('Already edited')
+            return
         new_description = f'{old_description} Cash {self.get_products_cashback_array(retaildemand_id)} + Coffee'
         response = self.put(f'entity/retaildemand/{retaildemand_id}', {'description': new_description})
         return response

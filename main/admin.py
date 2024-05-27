@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Config
+from config_models.admin import ConfigurationModelAdmin
 
-# Register your models here.
+@admin.register(Config)
+class ConfigAdmin(ConfigurationModelAdmin):
+    pass
