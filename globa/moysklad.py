@@ -12,7 +12,7 @@ load_dotenv()
 
 class Moysklad:
     def __init__(self):
-        self.config = Config.current()
+        self.config = Config.objects.all().first()
         self.login = self.config.login
         self.password = self.config.password
         self.base_url = 'https://api.moysklad.ru/api/remap/1.2/'
