@@ -23,6 +23,6 @@ static_and_media = static(settings.STATIC_URL, document_root=settings.STATIC_ROO
                    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = [
-    path('globa/admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('main.urls'))
 ] + static_and_media
