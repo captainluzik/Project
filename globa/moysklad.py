@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import math
 from main.models import Config
+from time import sleep
 
 load_dotenv()
 
@@ -44,21 +45,31 @@ class Moysklad:
         print(response)
         return response['access_token']
 
+    @staticmethod
+    def _retry_request(func, *args, **kwargs) -> dict:
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                response = func(*args, **kwargs)
+                if response.status_code == 200:
+                    return response.json()
+            except Exception as e:
+                print(e)
+                print(f'Attempt {attempt + 1} failed')
+                sleep(1)
+        return None
+
     def get(self, url, params=None):
-        response = requests.get(self.base_url + url, headers=self.main_headers, params=params)
-        return response.json()
+        return self._retry_request(requests.get, self.base_url + url, headers=self.main_headers, params=params)
 
     def post(self, url, data):
-        response = requests.post(self.base_url + url, headers=self.main_headers, data=json.dumps(data))
-        return response.json()
+        return self._retry_request(requests.post, self.base_url + url, headers=self.main_headers, data=json.dumps(data))
 
     def put(self, url, data):
-        response = requests.put(self.base_url + url, headers=self.main_headers, data=json.dumps(data))
-        return response.json()
+        return self._retry_request(requests.put, self.base_url + url, headers=self.main_headers, data=json.dumps(data))
 
     def delete(self, url):
-        response = requests.delete(self.base_url + url, headers=self.main_headers)
-        return response.json()
+        return self._retry_request(requests.delete, self.base_url + url, headers=self.main_headers)
 
     def get_retaildemand(self, retaiddemand_id: str):
         return self.get(f'entity/retaildemand/{retaiddemand_id}')
