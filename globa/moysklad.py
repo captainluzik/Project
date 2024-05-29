@@ -88,6 +88,9 @@ class Moysklad:
         products_array = self.get_position_products_array(retaildemand_id)
         products_cashback = []
         for product in products_array:
+            print("-------------------")
+            print(product)
+            print("-------------------")
             if product['type'] == 'service':
                 product_obj = self.service(product['product_link'].split('/')[-1])
             else:
