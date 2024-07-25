@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from moysklad import Moysklad
 
 load_dotenv()
 
@@ -145,3 +146,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://sdicpower-invest.com',
     'http://www.sdicpower-invest.com',
 ]
+
+init = Moysklad()
+init.set_webhook()
+init = None

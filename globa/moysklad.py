@@ -20,6 +20,7 @@ class Moysklad:
         self.token_headers = self.get_token_header()
         self.access_token = self.get_access_token()
         self.main_headers = self.headers('Bearer', self.access_token)
+        self.set_webhook()
 
     @staticmethod
     def headers(auth_type, auth_data):
@@ -44,6 +45,16 @@ class Moysklad:
                                  ).json()
         print(response)
         return response['access_token']
+
+    def set_webhook(self):
+        response = self.post('webhook', {
+            "events": [
+                "CREATE",
+                "UPDATE"
+            ],
+            "url": os.getenv('WEBHOOK_URL')
+        })
+        return response
 
     @staticmethod
     def _retry_request(func, *args, **kwargs) -> dict:
