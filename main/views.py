@@ -4,6 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from globa.moysklad import Moysklad
 import json
 
+init = Moysklad()
+init = None
+
 
 @csrf_exempt
 def webhook(request):

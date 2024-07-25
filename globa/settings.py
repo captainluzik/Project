@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from moysklad import Moysklad
 
 load_dotenv()
 
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'config_models',
-    "main.apps.MainConfig"
+    "main.apps.MainConfig",
 ]
 
 MIDDLEWARE = [
@@ -144,6 +143,3 @@ CSRF_TRUSTED_ORIGINS = [
     'http://www.sdicpower-invest.com',
 ]
 
-init = Moysklad()
-init.set_webhook()
-init = None

@@ -14,13 +14,14 @@ load_dotenv()
 class Moysklad:
     def __init__(self):
         self.config = Config.objects.all().first()
-        self.login = self.config.login
-        self.password = self.config.password
-        self.base_url = 'https://api.moysklad.ru/api/remap/1.2/'
-        self.token_headers = self.get_token_header()
-        self.access_token = self.get_access_token()
-        self.main_headers = self.headers('Bearer', self.access_token)
-        self.set_webhook()
+        if self.config:
+            self.login = self.config.login
+            self.password = self.config.password
+            self.base_url = 'https://api.moysklad.ru/api/remap/1.2/'
+            self.token_headers = self.get_token_header()
+            self.access_token = self.get_access_token()
+            self.main_headers = self.headers('Bearer', self.access_token)
+            self.set_webhook()
 
     @staticmethod
     def headers(auth_type, auth_data):
