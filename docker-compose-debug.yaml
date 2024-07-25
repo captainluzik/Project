@@ -27,7 +27,7 @@ services:
     networks:
       - globa_network
     ports:
-      - "8080:8080"
+      - "8000:8000"
 
 #  nginx:
 #    container_name: nginx
