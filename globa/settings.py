@@ -140,8 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APPEND_SLASH = False
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://sdicpower-invest.com',
-    'https://www.sdicpower-invest.com',
-    'http://sdicpower-invest.com',
-    'http://www.sdicpower-invest.com',
+    'https://mobistor.xyz',
+    'http://mobistor.xyz',
+
 ]
