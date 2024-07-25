@@ -11,4 +11,4 @@ do
 done
 python manage.py collectstatic --noinput
 
-gunicorn globa.wsgi:application --bind 0.0.0.0:8787 --workers 4 --threads 4
+gunicorn globa.wsgi:application --bind 0.0.0.0:8080 --workers 4 --threads 4
