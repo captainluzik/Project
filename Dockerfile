@@ -13,7 +13,7 @@ RUN poetry install --no-interaction --no-ansi --no-dev
 
 COPY . /app
 
-EXPOSE 8787
+EXPOSE 8000
 
 RUN chmod +x docker-entrypoint.sh
 
