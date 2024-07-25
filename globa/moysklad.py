@@ -48,13 +48,19 @@ class Moysklad:
         return response['access_token']
 
     def set_webhook(self):
-        response = self.post('webhook', {
-            "events": [
-                "CREATE",
-                "UPDATE"
-            ],
-            "url": os.getenv('https://mobistor.xyz/webhook/')
+        response = self.post('entity/webhook', {
+            "url": 'https://mobistor.xyz/webhook/',
+            "action": "CREATE",
+            "entityType": "retaildemand"
         })
+        print(response)
+        response = self.post('entity/webhook', {
+            "url": 'https://mobistor.xyz/webhook/',
+            "action": "UPDATE",
+            "entityType": "retaildemand"
+        })
+        print(response)
+        print('Webhook set')
         return response
 
     @staticmethod
