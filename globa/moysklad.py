@@ -53,7 +53,7 @@ class Moysklad:
                 "CREATE",
                 "UPDATE"
             ],
-            "url": os.getenv('WEBHOOK_URL')
+            "url": os.getenv('https://mobistor.xyz/webhook/')
         })
         return response
 
